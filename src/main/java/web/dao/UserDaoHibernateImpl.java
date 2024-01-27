@@ -1,6 +1,6 @@
 package web.dao;
 
-import jakarta.persistence.EntityManager;
+import javax.persistence.EntityManager;
 import org.springframework.stereotype.Repository;
 import web.model.User;
 @Repository
