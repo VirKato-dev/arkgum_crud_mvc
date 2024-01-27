@@ -1,8 +1,11 @@
 package web.dao;
 
-import javax.persistence.EntityManager;
+import jakarta.persistence.EntityManager;
 import org.springframework.stereotype.Repository;
 import web.model.User;
+
+import java.util.List;
+
 @Repository
 public class UserDaoHibernateImpl implements UserDao{
     private final EntityManager entityManager;
@@ -13,5 +16,10 @@ public class UserDaoHibernateImpl implements UserDao{
     public void addUser(User user) {
         entityManager.joinTransaction();
         entityManager.persist(user);
+    }
+
+    @Override
+    public List<User> getAllUsers() {
+        return entityManager.createQuery("FROM User user").getResultList();
     }
 }

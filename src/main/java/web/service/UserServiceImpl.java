@@ -1,11 +1,13 @@
 package web.service;
 
-import javax.transaction.Transactional;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 import web.dao.UserDao;
 import web.model.User;
+
+import java.util.List;
+
 @Service
-@Transactional
 public class UserServiceImpl implements UserService{
     private final UserDao userDao;
 
@@ -14,7 +16,14 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
+    @Transactional
     public void addUser(User user) {
         userDao.addUser(user);
+    }
+
+    @Override
+    @Transactional
+    public List<User> getAllUsers() {
+        return userDao.getAllUsers();
     }
 }
