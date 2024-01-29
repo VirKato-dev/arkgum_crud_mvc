@@ -2,10 +2,12 @@ package web.controller;
 
 
 
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 
 
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -53,7 +55,10 @@ public class UsersController {
         return "users/new";
     }
     @PostMapping("/create")
-    public String create(@ModelAttribute("user")User user){
+    public String create(@ModelAttribute("user") @Valid User user,
+                         BindingResult bindingResult){
+        if(bindingResult.hasErrors())
+            return "users/new";
         userService.create(user);
         return "redirect:/user/all";
     }
@@ -71,7 +76,10 @@ public class UsersController {
     }
 
     @PostMapping("/{id}/edit")
-    public String edit(@ModelAttribute("user")User user){
+    public String edit(@ModelAttribute("user")@Valid User user,
+                       BindingResult bindingResult){
+        if(bindingResult.hasErrors())
+            return "users/edit";
         userService.update(user.getId(), user);
         return "redirect:/user/all";
     }
